@@ -1,0 +1,22 @@
+{
+  "name": "simple-express-api",
+  "version": "1.0.0",
+  "description": "A simple Express.js API with one endpoint",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js",
+    "dev": "nodemon app.js"
+  },
+  "dependencies": {
+    "@ulixee/cloud": "^2.0.0-alpha.31",
+    "@ulixee/hero": "^2.0.0-alpha.26",
+    "@ulixee/hero-core": "^2.0.0-alpha.31",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.18.2",
+    "node-fetch": "^3.3.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.1"
+  }
+}

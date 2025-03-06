@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  ulixee-scraper:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: ulixee-scraper:production
+    container_name: ulixee-scraper
+    restart: unless-stopped
+    ports:
+      - "3000:3000"  # Express API
+      - "1818:1818"  # Ulixee CloudNode
+    environment:
+      - NODE_ENV=production
+      - PORT=3000
+      - CLOUD_PORT=1818
+      - API_KEY=${API_KEY}  # Use from .env file or set when running docker-compose
+    volumes:
+      - ulixee-data:/home/ulixeeuser/Downloads  # For downloaded files
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3000/"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 5s
+
+volumes:
+  ulixee-data:
+    # This will persist downloaded data across container restarts
