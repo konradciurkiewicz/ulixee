@@ -14,14 +14,6 @@ const cloudNodeOptions = {
   port: CLOUD_PORT,
 };
 
-// If Docker environment with system Chrome, use it
-if (process.env.ULIXEE_CHROME_EXECUTABLE_PATH) {
-  console.log(`Using Chrome at: ${process.env.ULIXEE_CHROME_EXECUTABLE_PATH}`);
-  cloudNodeOptions.coreServerOptions = {
-    dataDir: '/home/ulixeeuser/Downloads',
-  };
-}
-
 // Initialize CloudNode
 const cloudNode = new CloudNode(cloudNodeOptions);
 
@@ -42,12 +34,11 @@ app.use(cors());
 // Middleware for parsing JSON
 app.use(express.json());
 
-// Add a health check endpoint for Docker
+// Add a health check endpoint
 app.get('/', (req, res) => {
   res.status(200).json({ 
     status: 'ok', 
-    message: 'Service is running',
-    chromeExecutable: process.env.ULIXEE_CHROME_EXECUTABLE_PATH || 'Using npm package'
+    message: 'Service is running'
   });
 });
 
@@ -154,9 +145,6 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
   console.log(`API secured with API Key authentication`);
   console.log(`CloudNode should be available at ws://localhost:${CLOUD_PORT}`);
-  if (process.env.ULIXEE_CHROME_EXECUTABLE_PATH) {
-    console.log(`Using Chrome at: ${process.env.ULIXEE_CHROME_EXECUTABLE_PATH}`);
-  }
 });
 
 // Graceful shutdown handling
